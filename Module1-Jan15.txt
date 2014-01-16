@@ -1,7 +1,101 @@
 
+Module 1 - slides
+
+Bootcamp
+Learning principles
+- immersion
+- active reading - write down questions, look things up, do some of the exercises
+- mastering small skills first
+- practice makes perfect
+
+lesson 1.2
+ The Six Principles of this course
+1. Programming is a People Discipline
+2. Represent Information as Data; Interpret Data as Information
+3. Programs should consist of functions and methods that consume and produce data
+4. Design Functions Systematically
+5. Design Systems Iteratively
+6. Use State Only for Sharing Values
 
 
-Module 1
+ The Four Strategies
+Domain Knowledge
+Function Composition - http://en.wikipedia.org/wiki/Function_composition_(computer_science)
+Structural Decomposition - http://en.wikipedia.org/wiki/Functional_decomposition
+General Recursion
+
+The First Four Slogans
+1. Stick to the recipe
+2. Practice makes perfect
+3. The shape of the data determines the shape of the program
+4. Test suites are your friend
+
+
+ The Function Design Recipe
+1. Information Analysis and Data Design
+2. Contract and Purpose Statement
+3. Examples
+4. Design Strategy
+5. Function Definition
+6. Tests
+
+1 = Data definitions
+2 = contract (input and output types, with any "interpretation" units or assumptions or constraints ("where r is a radius in cm")
+    purpose = Given and Returns, phrased in terms of information
+    if structured data, includes a template
+3 = obvious use cases
+4 = what strategy applies to this class or method
+5 = code
+6 = tests (check-equal)
+
+Slides 1.3:
+
+We will consider 5 kinds of information:
+scalar information - numbers, strings, etc 
+itemization information (= enumeration, clear mutually exclusive distinct values.  Traffic light = red, yellow, green)
+partition information (partitioned into buckets, one bucket is "everything else" - example = tax brackets)
+compound information
+mixed information
+
+scalars - no data definition or template needed for scalars
+
+itemization - data definition for itemization lists out possible values and interpretation, template shows how to write a function that looks at each value
+see TLSState example or slide 16 in lesson 1.3 for template on itemized data formatting
+
+partition - data definition shows what kind of data is partitioned, what values are in what partition case, interpretation of each case
+cases must be mutually exclusive and exhaustive, any data values falls into one case, similar to itemization but has an "else" clause
+see slide 20 in 1.3
+
+compound information - information has two or more quantities, or two or more attributes
+in Racket, use a struct to represent.  Make-struct is the constructor, properties are "selectors", predicate is "is this a book" = 'book?"
+See slide 8, lesson 1.4, and example file for book
+for ring - note the "WHERE" comment in the data defintion
+compound can contain a compound
+mixed information - sort of like partitioned or itemized mixed with compound.  
+Sort of like polymorphic - see bar order example (slide 18, lesson 1.4 or rkt file)
+
+ Kind of Information
+Example
+Scalar			
+Temperature
+
+Itemization
+Traffic Light state (red, yellow, OR green)
+
+Partition
+Taxable Income
+
+Compound
+Book (author, title, AND copies)
+
+Mixed
+BarOrder (coffee (compound), 
+            OR wine (compound) 
+            OR tea (compound))
+
+
+
+Module 1 - lecture
 
 Structual decomposition
 - look at the parts, understand inside the object to figure out parts that make it up, and work on them
@@ -45,58 +139,6 @@ gotchas:
 Functional - scheme, racket, lisp
 Procedural - nearly everything else
 Logic - prolog
-
-
-Slides:
- The Six Principles of this course
-1. Programming is a People Discipline
-2. Represent Information as Data; Interpret Data as Information
-3. Programs should consist of functions and methods that consume and produce data
-4. Design Functions Systematically
-5. Design Systems Iteratively
-6. Use State Only for Sharing Values
-
- The Function Design Recipe
-1. Information Analysis and Data Design
-2. Contract and Purpose Statement
-3. Examples
-4. Design Strategy
-5. Function Definition
-6. Tests
-
- The Four Strategies
-Domain Knowledge
-Function Composition
-Structural Decomposition
-General Recursion
-
-
-We will consider 5 kinds of information:
-scalar information
-itemization information
-partition information
-compound information
-mixed information
-
- Kind of Information
-Example
-Scalar			
-Temperature
-
-Itemization
-Traffic Light state (red, yellow, OR green)
-
-Partition
-Taxable Income
-
-Compound
-Book (author, title, AND copies)
-
-Mixed
-BarOrder (coffee (compound), 
-            OR wine (compound) 
-            OR tea (compound))
-
 
 
 ;; Data Definitions
