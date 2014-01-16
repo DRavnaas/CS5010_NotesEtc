@@ -1,0 +1,163 @@
+
+
+
+Module 1
+
+Structual decomposition
+- look at the parts, understand inside the object to figure out parts that make it up, and work on them
+
+selectors (properties)
+predicate (book?)
+constructor (make-book)
+
+template for structural decomposition
+(keep it simple)
+
+in schem
+
+can other people read it
+
+good variable names
+
+be sure to refactor
+
+one strategy per function - keep them simple and don't mix
+
+for area - used both washer selectors (washer-inner and washer outer)
+and domain knowledge
+
+but now, better - one function for circle area
+one subtracting the two areas
+
+
+gotchas:
+- one funtion, one strategy
+- useful naming (book isn't great on this)
+- follow recipe
+- data types (part of recipe)
+
+3 unusual things about scheme
+- it's new to most people
+- relatively syntax free
+- data types can be mostly ignored
+- it's a functional language
+
+Functional - scheme, racket, lisp
+Procedural - nearly everything else
+Logic - prolog
+
+
+Slides:
+ The Six Principles of this course
+1. Programming is a People Discipline
+2. Represent Information as Data; Interpret Data as Information
+3. Programs should consist of functions and methods that consume and produce data
+4. Design Functions Systematically
+5. Design Systems Iteratively
+6. Use State Only for Sharing Values
+
+ The Function Design Recipe
+1. Information Analysis and Data Design
+2. Contract and Purpose Statement
+3. Examples
+4. Design Strategy
+5. Function Definition
+6. Tests
+
+ The Four Strategies
+Domain Knowledge
+Function Composition
+Structural Decomposition
+General Recursion
+
+
+We will consider 5 kinds of information:
+scalar information
+itemization information
+partition information
+compound information
+mixed information
+
+ Kind of Information
+Example
+Scalar			
+Temperature
+
+Itemization
+Traffic Light state (red, yellow, OR green)
+
+Partition
+Taxable Income
+
+Compound
+Book (author, title, AND copies)
+
+Mixed
+BarOrder (coffee (compound), 
+            OR wine (compound) 
+            OR tea (compound))
+
+
+
+;; Data Definitions
+;; A washer is a (make-washer NonNegNumber NonNegNumber)
+(define-struct washer inner outer)
+;; Interpretation
+;;
+;; inner and outer are expressed in centimeters and are the 
+;; inner and outer radius respectively
+;;    (whatever else you need to help a user understand what the data represents - units, etc
+;;    and can include conditions/restrictions
+;; where inner < outer
+;;
+;; template (cut and paste to use this - general usage 
+
+;; washer-fn: washer -> ??  (contract for template)
+;; (define (washer-fn washer)
+;;  (... (washer-inner washer)
+;;       (washer-outer washer))
+
+then do the functions
+
+; circle-area: NonNegNumber -> NonNegNumber
+make input as permissive as possible, but make outputs as specific as accurately possible
+
+can specify more conditions in function contract
+washer-area1: nonNeg nonNeg -> nonNeg
+	where outer > inner
+
+purpose - tells in english what the function is (does NOT describe the code)
+what (=purpose) versus how (=code)
+calculates the area given the inner and outer radiu
+NOT (subtracts blah blah blah)
+
+then just make sure the function does what hte purpose statement says
+
+Given:
+Returns:
+
+Examples
+explains how to use it; chosen to show usage
+Tests typically start with examples, but tests can certainly have more cases (and might need setup)
+Examples - be sure they are chosen with the contract in mind
+written before the tests, helps you keep track of what your code has to handle
+
+strategy:
+for now - we have to limit and pick just one
+strategy is how
+code is detailed how
+(you might notice corner cases while you are coding - add those as test)
+Tests should not test things that are important to the purpose, not side-affects of how the code is implemented
+
+for circle area 
+0 is a good example - = 0 easy to check
+1 is a good example - = pi easy to check
+2 is a good example - since 0 and 1 have the property that n*n=n
+
+examples = obvious things in the real world
+
+
+tests = easy things to do based on what I've already got
+
+examples and tests do not have to test things outside of your contract
+
