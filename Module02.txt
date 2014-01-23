@@ -84,3 +84,31 @@ don't just paste in result as "right" answer
 100% line coverage for test
 don't need full tests for all helpers (too many is too confusing)
 so some mix of understandable set of tests
+
+helper functions can be a little more minimal (but explainable at a glance)
+but put it in if in doubt (and always do contract)
+functionality asked for in problem set - do full meal deal for those
+
+problem #2 - assume machine has money to start with (assume infinite amount of change)
+Not asking to design a machine that can run out of change
+
+include *.rkt as specified in the tests
+
+if racket defines things for you - you don't have to fill out the full meal deal for those
+
+if an assignment lists a different name than is convenient - then you might have work to do
+(ie: don't assume they means the selector or predicate - read the assignment)
+
+Regular expressions:
+? = exactly one of this symbol
+* = 0 or more
+this expression | that expression
+
+assume there's some special "this is the end" keystroke
+
+robot - "entirely in the canvas"
+"turn then move"
+"not entirely within the canvas"
+right on the line = within (I think, read it carefully)
+"
+
