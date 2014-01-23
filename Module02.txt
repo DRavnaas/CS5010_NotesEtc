@@ -1,6 +1,37 @@
 
 Module 2 - slides
 
+
+http://www.ccs.neu.edu/course/cs5010sp14/modules/module02.html
+
+Slides:
+
+http://www.jamasoftware.com/wp-content/uploads/documents/wiegers-testing-the-requirements.pdf
+
+
+Questions:
+how is "write tests once you have requirements" different from test driven development
+- one difference in the jama pdf - the tests help improve the requirements
+
+writing tests and functional requirements + map for coverage, assess consistency and clarity
+improves requirements before design and implementation
+
+We will explore 3 important design strategies (out of five)
+domain knowledge
+function composition
+structural decomposition
+(other two are high order function composition and general recursion
+
+Design strategy indicates how to get from the purpose statement to the code
+
+Domain Knowledge:
+- The code is produced by transcribing a mathematical formula.
+- No "programming knowledge" required.
+- Usually used for scalar data (e.g., numbers)
+- The code produced is typically very short
+- It does not call any functions except for those built into the programming language.
+
+
 Structural decomposition:
 Used when the problem can be solved by examining a piece of non-scalar data. 
 
@@ -50,5 +81,6 @@ don't just paste in result as "right" answer
 
 (explain test strategy for coverage?)
 
-
-
+100% line coverage for test
+don't need full tests for all helpers (too many is too confusing)
+so some mix of understandable set of tests
