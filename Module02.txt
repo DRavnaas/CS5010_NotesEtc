@@ -1,0 +1,54 @@
+
+Module 2 - slides
+
+Structural decomposition:
+Used when the problem can be solved by examining a piece of non-scalar data. 
+
+If the data is compound data, this means extracting its fields.  
+If the data is itemization or partition data, this means determining which variant the data is.  
+If the data is mixed data, this means determining which variant the data is, and then extracting its fields, if any. 
+Every data definition includes a template that shows how this examination process is to be organized.
+Writing a function using structural decomposition is accomplished by filling in the blanks in the template.
+
+
+ Recipe for Structural Decomposition
+1. Do the first four steps of the design recipe first!!
+2. Make a copy of the template and uncomment it
+3. Fill in the function name and add more arguments if needed
+4. Fill in the blanks in the template with functional compositions of the arguments and the fields.
+
+Using the template - keep cases in order
+
+Function composition versus structual decomposition:
+In function composition, you can't take look at a piece of data; all you can do is pass it around.
+So (if (inside-ball? ball x y) ... ...) is function composition.
+here we're just passing ball to inside-ball?, which will look at the coordinates of the ball.
+
+On the other hand, in 
+	(if (< (ball-x ball) 0) ... ...) 
+
+Guided practice - only use structural decomposition on the thing you said you would, always follow template, including predicates
+
+Testing:
+
+Qualification Testing: Make sure program is ready for more serious testing
+Acceptance Testing: Make sure program works on the given examples or use cases
+Requirements Testing: Make sure program works as intended on other examples
+Regression Testing: Make sure that a change hasn’t broken anything.
+Stress Testing: How does the program perform for large inputs, heavy loads, etc.?
+Usability Testing: Is the program usable by its intended audience?
+
+
+(require rackunit) 
+(require rackunit/text-ui)
+
+Equivalence partitioning - vary your inputs to cover all cases
+
+pitfalls in testing - 
+some tests can have more than one correct answer - test them all
+don't just paste in result as "right" answer
+
+(explain test strategy for coverage?)
+
+
+
