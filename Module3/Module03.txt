@@ -1,6 +1,8 @@
 Module 3
 
 Slides:
+3.1
+-----------
 System design recipe
 Iterative refinement recipe
 2htdp/universe
@@ -8,11 +10,11 @@ Iterative refinement recipe
 What is the data/state:
 Traffic light - state is current color and # ticks until it changes
 Falling cat - state is position of cat and whether it is paused or not
-(write data definition for that)
+(write data definition for that and any constants)
 
 What inputs:
 Time passing and keystrokes
-(write data definition for that)
+(write data definition for that) 
 next make a wishlist for contracts and purpose statements
 then design those functions
 
@@ -40,6 +42,22 @@ note that it's ok to follow template and eliminate one of the lines if you don't
 
 Last item on wishlist is main
 
+3.2
+--------------
+constant versus world state?
+
+2htdp/universe:
+Provides a way of creating and running an interactive machine.
+Machine will have some state.
+Machine can respond to inputs. 
+Response to input is described as a function.
+Machine can show its state as a scene.
+We will use this to create interactive animations.
+
+State is information that changes in response to stimulus
+Other things are constants
+
+Traffic light - num ticks til next change - state, current color - state - how often things change - constant
 
 
 
