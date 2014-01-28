@@ -1,0 +1,62 @@
+Module 3
+
+Slides:
+System design recipe
+Iterative refinement recipe
+2htdp/universe
+
+What is the data/state:
+Traffic light - state is current color and # ticks until it changes
+Falling cat - state is position of cat and whether it is paused or not
+(write data definition for that)
+
+What inputs:
+Time passing and keystrokes
+(write data definition for that)
+next make a wishlist for contracts and purpose statements
+then design those functions
+
+Wishlist for cat - how does world repsone to time, how does it respond to key events, render a world to a scene
+and "running the world" - run the simulation given starting state = main
+
+(write those contract/purposes)
+next - write examples for the functions
+choose strategy - 
+If ... in template is complicated, make it it's own function
+
+Then helper function - (functional composition) - don't need examples, or separate tests, just debugging 
+(but get full coverage)
+
+write a few tests - as test suite so no errors until you run them (ie: all code isn't written yet)
+then finish function definitions
+
+tests - give names to typical values
+
+put test suite next to function, put all "run-test" statements at end
+
+Now work on helpers, finish wishlist
+note that it's ok to follow template and eliminate one of the lines if you don't need that property
+(ie: breaking up a structure, and you only need x you don't need y)
+
+Last item on wishlist is main
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

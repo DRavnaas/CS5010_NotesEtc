@@ -1,0 +1,124 @@
+Module 3
+
+CS 5010: Problem Set 2
+
+Out: Monday, January 27, 2014
+
+Due: Monday, February 3, 2014 at 6:00pm local time
+
+The goal of this problem set is to help you design functions that deal with the Universe Module.
+
+Remember that you must follow the design recipe. Your deliverables include the data analysis (including template), contract and purpose header, examples, design strategy, code, and tests. You must also include your laboratory notebook.
+
+Required Exercises
+
+As you did before, these problems, download a copy of extras.rkt and cat.png put them the folder with your solutions. Import the extras library by including the line
+
+(require "extras.rkt")
+at the top of your file with the other requires. Then, for each problem, put in lines that say
+(provide function)
+for each deliverable function. Thus, for problem 1, the top of your file should say
+(require 2htdp/universe)
+(require 2htdp/image)
+(require rackunit)
+(require rackunit/text-ui)
+(require "extras.rkt")
+
+;; run with (run 0)
+
+(provide run)
+(provide initial-world)
+(provide world-to-center)
+and so on.This will allow our testing framework to import your file and do automated testing on it.
+Note: For all universe programs, you may assume that the mouse is never dragged outside of the canvas.
+
+(Draggable Rectangle) Write a universe program rectangle.rkt that displays a selectable, draggable rectangle. More specifically:
+Your program should start by displaying a solid green rectangle 100 pixels wide and 60 pixels high on a 400 x 300 scene.
+Depressing the mouse button within the rectangle causes the rectangle to be "selected". This is shown visually by replacing the solid green rectangle by a green outline rectangle. The location where the mouse grabbed the rectangle should be indicated by a solid red circle of radius 5 pixels. Simply pressing the mouse button, without moving the mouse, should not cause the rectangle to move on the canvas.
+Once the rectangle has been grabbed, you should be able to drag it around the Universe canvas with the mouse. As you drag it, the position of the mouse within the rectangle (as indicated by the red circle), should not change. When the mouse button is released, the rectangle should go back to its unselected state (solid green) in its new location.
+The rectangle cannot be dragged past the edges of the canvas. If the mouse is dragged too close to the edge of the canvas while the rectangle is selected, the rectangle remains tangent to the edge of the canvas. If the mouse moves along the other axis, the rectangle slides along the edge of the canvas. The position of the red circle within the rectangle never changes as long as the rectangle is still selected.
+Here's a small demo.
+
+
+Provide the following functions:
+
+run : Any -> World
+GIVEN: any value
+EFFECT: ignores its argument and starts the interactive program.
+RETURNS: the final state of the world.
+
+initial-world : Any -> World
+GIVEN: any value
+RETURNS: the initial world.
+Ignores its argument.
+
+world-to-center : World -> Posn
+GIVEN: a world
+RETURNS: the coordinates of the center of the rectangle as a Posn
+
+world-selected? : World -> Boolean
+GIVEN a world
+RETURNS: true iff the rectangle is selected.
+
+world-after-mouse-event : World Number Number MouseEvent -> World
+RETURNS: the world that follows the given mouse event.
+Before you turn in your solution, make sure it passes the tests in ps02-rectangle-qualification.rkt. As before, download this file, save it in your set02 directory, and run it to qualify your program for grading.
+
+
+
+(Two Bouncing Cats) Write a program two-bouncing-cats.rkt. This program should be an extension of two-draggable-cats.rkt to satisfy the following requirements:
+The cats can move any of the cardinal directions (north, east, west, south). Hitting one of the arrow keys while a cat is selected for dragging means that when the cat moves again, it will move in the specified direction.
+A cat moving in any direction bounces smoothly off the edge of the canvas. Bouncing is defined as follows: if the cat would go past one side of the canvas, then at the next tick it should appear tangent to the edge of the canvas, travelling in the opposite direction (that is, away from the wall).
+Here's a small demo. Turn on the sound so you can hear me say when I press an arrow key. The little rings are a video effect, and are not created by the program you are to create.
+
+
+Observe that when the user drags the cat with the mouse, the cat jumps so that it is centered on the mouse position (unlike the behavior of the rectangle in problem 1). Please leave this behavior as is; do NOT change to match the behavior of problem 1.
+
+Provide the following functions:
+
+;; initial-world : Number -> World
+;; GIVEN: a y-coordinate
+;; RETURNS: a world with two unselected cats, spaced evenly across the
+;; canvas in the x-direction, and falling, and placed at the given y
+;; coordinate.
+
+;; world-after-tick : World -> World
+;; RETURNS: the world that should follow the given world after a tick.
+
+;; world-after-mouse-event : World Number Number MouseEvent -> World
+;; RETURNS: the world that follows the given mouse event.
+
+;; world-after-key-event : World KeyEvent -> World
+;; RETURNS: the world that follows the given key event.
+
+;; world-cat1 : World -> Cat
+;; world-cat2 : World -> Cat
+;; world-paused? : World -> Boolean
+;; RETURNS: the specified component of the given world
+;; NOTE: these are part of the world struct, so you don't need to
+;; write any deliverables for these functions.
+
+;; cat-x-pos : Cat -> Number
+;; cat-y-pos : Cat -> Number
+;; cat-selected? : Cat -> Boolean
+;; RETURNS: the specified component of the given cat
+;; NOTE: these are part of the cat struct, so you don't need to
+;; write any deliverables for these functions.
+
+;; cat-north? : Cat -> Boolean
+;; cat-east?  : Cat -> Boolean
+;; cat-south? : Cat -> Boolean
+;; cat-west?  : Cat -> Boolean
+;; GIVEN: a Cat c
+;; RETURNS: true iff c is travelling in the specified direction.
+;; NOTE: you will have to extend the cat struct to represent the cat's
+;; direction, so you will to define these functions, and provide the
+;; deliverables for them, as usual.
+;; NOTE: you get to design the new cat struct yourself.  However, if
+;; you look at these functions and decide to add 4 new fields north?,
+;; east?, south?, and west?, that is probably a bad decision.  Surely
+;; you can do better than that.
+For what it's worth, my solution to this problem was 383 lines (without tests). Of these, approximately 130 lines were new compared to two-draggable-cats.
+
+Qualify your program for submission by running ps02-bouncing-cats-qualification.rkt as you did for problem 1.
+
