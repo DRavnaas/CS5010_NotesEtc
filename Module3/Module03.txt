@@ -92,3 +92,44 @@ if writing a cond statement
 - and if that clause is an else - need to justify that
 cond mostly for mixed data, itemization and partition
 
+
+For example - how would you right "same-color" for a ball
+
+(define-struct ball (radius color))
+; (define (ball-fn ball)
+;  (... (ball-radius ball) (ball-color ball))
+ 
+(define (same-color? ball1 ball2)
+  (ball-color-match? (ball-color ball1) ball2))
+
+(define (ball-color-match? color ball)
+  (string=? color (ball-color ball)))
+
+(define ball1 (make-ball 5 "red"))
+(define ball2 (make-ball 6 "blue"))
+(define ball3 (make-ball 7 "red"))
+
+(same-color? ball1 ball2)
+(same-color? ball1 ball3)
+
+Note that we are allowed to:
+- drop radius, since we don't need it
+- string=? is our "..." (also with radius dropped)
+
+Here's a functional composition version:
+
+(define (decomposeball ball)
+(ball-color ball))
+
+(define (same-color? ball1 ball2)
+(string=? (decompose ball1) (decompose ball2))
+
+(note the helper is the template with leeway - ... is sort of "return this" and drops the radius
+and empty ... is ok
+
+try not to use single letter names (even though examples do)
+
+Don't worry about cases where you would select both cats - hard to solve
+
+
+
