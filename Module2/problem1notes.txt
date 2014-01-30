@@ -1,0 +1,75 @@
+1.       Information Analysis and Data Design
+2.       Contract and Purpose
+3.       Examples
+4.       Design Strategy
+5.       Function Definition
+6.       Tests
+ 
+Review strategies and rules of thumb:
+-          Domain knowledge = built in racket stuff – no helpers, no structure selectors,
+		o   Typically very short.  Usually used for very short data.
+-          Function composition = call only functions, don’t split items up
+		o   For example (- (area-of-circle outer) (area-of-circle inner))
+		o   Also typically very short
+		o   (we are currently saying make-xxx is functional – so functions that are built by the define-struct are functions)
+-          Structural decomposition - ?must follow template? – break up items in structure and pass to other functions
+		o   Handling each case of an itemization, directly comparing field values in  struct
+ 
+-          Are selectors functions, or something breaking up a struct?
+ 
+Problem #1:
+ 
+Information Analysis and Data Design:
+-          Robot is a struct
+		o   Robot has position, heading and a trap
+-          Direction is an itemization
+ 
+Overview:
+-          Decided to split out “direction” into separate file, not sure that was necessary
+-          Did the navigation first, no trap
+-          Spent a while deciding how to represent the trap, and then how to detect it
+-          Trap idea was good, but needed more implementation time to really pull it off. 
+		o   Functions got too big and needed another level of breakup
+ 
+Technical challenges:
+Took a while to decide how to do the trap and that cost me in the end
+You can see where things got rushed
+ 
+Test strategy (how many should I have had)
+ 
+Initial-robot: checked x y facing radius (=4 tests).  Did not check trap width and length.
+ 
+For robot-direction?
+Robot facing               predicate
+e/w/n/s                       e/w/n/s               4x4 = 16
+ 
+Robot right-left
+Robot facing               robot turn type
+e/w/n/s                       r/l                           4x2=8
+Had 2xn, checked if 180 from N and 180 from N same, checked that right and left from north same
+More testing in navigation tests
+ 
+For robot-forward:
+ 
+Start =In or out?                       Dest = in/through/out   Direction?           Result
+In / out / wall                         in/through/out          E/W/N/S              3x3x4 = 36 test cases
+ 
+What did I have:
+(out to out + e/w/n/s, inside to inside + e/w/n/s, in to out e/w/n/s, wall – no tests (so missing 3x4), move into trap – no tests (missing 3x4)
+ 
+So out of 6 + 16 + 8 + 36, has 4+16+8+12
+ 
+Problem #2:
+                Information Analysis and Data Design:
+-          Customer Request is one of carrots, chocolate or release
+-          Customer Input is a Customer Request OR a number
+-          Machine is a struct with state = # chocolates, # carrots, amount in bank and inserted change
+ 
+Problem #3:
+                Information Analysis and Data Design:
+-          Expression is mixed data
+		o   Either a diff exp or a mult exp
+ 
+Problem #4:
+ 
+                State is an itemization

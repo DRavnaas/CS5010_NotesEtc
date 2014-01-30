@@ -61,20 +61,34 @@ Traffic light - num ticks til next change - state, current color - state - how o
 
 
 
+3.3
+-----------
+
+3.4
+-----------
 
 
+Structural decomposition and templates
+Ok to "skip" unneeded params, for example
+(define-struct ball (radius color))
+ (... (ball-radius ball) (ball-color ball)
 
+If they were hard core on the template, we'd have to always 
+use both parameters - even when one isn;t needed - think about
+volume - you don't need color, but a hard rule would require it
 
+so ok to skip one if you need it
 
+also ok if you do very simple operations on selectors - for example diameter
+(define (ball-volume ball)
+(sphere-volume (* 2 (ball-radius ball)))
 
+take a structure - break it into parts - that's structural decomposition
 
+don't structural decompose two things at ones (if two balls - pick one to decompose)
 
-
-
-
-
-
-
-
-
+if writing a cond statement
+- at least one of the clauses is true
+- and if that clause is an else - need to justify that
+cond mostly for mixed data, itemization and partition
 
