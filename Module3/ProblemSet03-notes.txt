@@ -1,0 +1,14 @@
+
+Module 3 code walkthrough notes
+
+Problem 1
+
+1. Information Analysis
+	What events should the world respond to?
+	What information changes in response to an event?
+	What information doesn't change in response to an event?
+2. From your information analysis, write out the constant definitions and data definitions.
+3. From your list of events, write a wishlist of functions to be designed
+4. Design the functions on your wishlist (use the design recipe!)
+
+Question - initial world - ok to put rectangle at center?
