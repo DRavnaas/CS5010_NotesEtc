@@ -12,3 +12,40 @@ Problem 1
 4. Design the functions on your wishlist (use the design recipe!)
 
 Question - initial world - ok to put rectangle at center?
+
+Info analysis:
+Dimensions of canvas: constant
+x pos of rectangle:  world
+y pos of rectangle:  world
+rectangle selected or not:  world
+x pos of circle: world
+y pos of circle: world
+....OR mouse position = world
+size of rectangle: constant
+
+in-rectangle says whether selects or not
+but then need to render without assuming x, y = new center
+
+...or could use mouse position 
+
+
+Problem #2:
+
+1st step - copy over two draggable cats
+Add heading and get tests to work
+Added "stop at wall"
+Added handling direction keys
+Added "bounce"
+
+To do - added shift in if dragged off campus
+To do - check on arrow keys if cat not selected
+To do - double check all have examples
+To do - double check all have tests and test coverage = 100
+To do - double check strategy
+
+tests needed:
+world-after-tick
+cat-after-tick
+
+
+Stil
