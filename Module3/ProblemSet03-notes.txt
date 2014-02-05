@@ -2,6 +2,7 @@
 Module 3 code walkthrough notes
 
 Problem 1
+--------------
 
 1. Information Analysis
 	What events should the world respond to?
@@ -14,6 +15,11 @@ Problem 1
 Question - initial world - ok to put rectangle at center?
 
 Info analysis:
+
+1.  Events to respond to - mouse events
+2.  Rectangle state and position changed for certain mouse events
+3.  Things that don't change - rectangle size, canvas size, mouse indicator size
+
 Dimensions of canvas: constant
 x pos of rectangle:  world
 y pos of rectangle:  world
@@ -30,22 +36,29 @@ but then need to render without assuming x, y = new center
 
 
 Problem #2:
+-----------------------
 
 1st step - copy over two draggable cats
-Add heading and get tests to work
+Add heading (= direction) and get tests to work
 Added "stop at wall"
 Added handling direction keys
 Added "bounce"
-
-To do - added shift in if dragged off campus
-To do - check on arrow keys if cat not selected
-To do - double check all have examples
-To do - double check all have tests and test coverage = 100
-To do - double check strategy
+Added "bounce back" if dragged partially off campus
 
 tests needed:
 world-after-tick
 cat-after-tick
 
+Events to respond to: mouse events (click detection,drag,change direction), key events (pause, unpause), tick events
+World changes for pause/unpause
+One cat (max) changes for mouse clicks
+Each cat can change for ticks
 
-Stil
+Dimensions of canvas: constant
+x,y pos of cat1:  cat1
+x,y pos of cat2:  cat2
+both cats paused:  world
+cat1 selected: cat1
+cat2 selected: cat2
+Size of cat: constant
+
