@@ -1,8 +1,14 @@
 
 Module 3 code walkthrough notes
 
-Problem 1
---------------
+The System Design Recipe:
+1. Write a purpose statement for your system.
+2. Design data to represent the relevant information in the world.
+3. Make a wishlist of main functions.  Write down their contracts and purpose statements.
+4. Design the individual functions. Maintain a wishlist (or wishtree) of functions you will need to write.
+
+
+Recipe for designing a world:
 
 1. Information Analysis
 	What events should the world respond to?
@@ -11,6 +17,19 @@ Problem 1
 2. From your information analysis, write out the constant definitions and data definitions.
 3. From your list of events, write a wishlist of functions to be designed
 4. Design the functions on your wishlist (use the design recipe!)
+
+
+Adding a New Feature to an Existing Program
+1. Perform information analysis for new feature
+2. Modify data definitions as needed
+3. Update existing functions to work with new data definitions
+4. Write wishlist of functions for new feature
+5. Design new functions following the Design Recipe
+6. Repeat for the next new feature
+
+
+Problem #1:
+-----------------------
 
 Question - initial world - ok to put rectangle at center?
 
