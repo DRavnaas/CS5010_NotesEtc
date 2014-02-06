@@ -1,0 +1,68 @@
+Module 4
+
+Slides 4.0
+
+ 
+Q: Does the data definition distinguish among different subclasses of data?
+A: Your template needs as many cond clauses as subclasses that the data definition distinguishes.
+
+Q: How do the subclasses differ from each other?
+A: Use the differences to formulate a condition per clause.
+
+Q: Do any of the clauses deal with structured values?
+A: If so, add appropriate selector expressions to the clause.
+
+Q:Does the data definition use self-references?
+A: Formulate "natural recursions'' for the template to represent the self-references of the data definition.
+
+Slides 4.1
+
+info of arbitrary size
+
+lists are single linked lists
+
+different notation:
+(cons 11 list) = (list 11 22 33)
+
+Template for list data is very similar to template for mixed data
+;; list-fn : ListOf<X> -> ??
+(define (list-fn lst)
+  (cond
+    [(empty? lst) ...]
+    [else (... (first lst)
+               (list-fn (rest lst)))]))
+
+That template follows the template questions:
+1. Write a cond clause with the correct number of clauses.
+2. Write predicates that distinguish the cases.
+3. For mixed data, add selectors
+4. For recursive data, add a recursive call
+
+For example - list of numbers length
+
+(define (lon-length lst)
+(cond
+  [(empty? lst) 0]  ; answer for an empty list
+  [else (+ 1 (first lst) ; get the answer for the first item
+             (lon-length (rest lst)))])) ; get the answer for the rest
+
+
+4.3  lists of structures
+
+Add one more question
+
+Q: Do any of the fields contain compound or mixed data?
+A: If the value of a field is a foo, add a call to a foo-fn to use it.
+
+;; A ListOfBooks (LOB) is either
+;; -- empty
+;; -- (cons Book LOB)
+
+;; lob-fn : LOB -> ??
+;; (define (lob-fn lob)
+;;   (cond
+;;     [(empty? lob) ...]
+;;     [else (...
+;;             (book-fn (first b))
+;;             (lob-fn (rest lob)))]))
+
