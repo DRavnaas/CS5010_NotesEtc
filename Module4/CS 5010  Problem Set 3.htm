@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN">
+<!-- saved from url=(0062)http://www.ccs.neu.edu/course/cs5010f13/problem-sets/ps03.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>CS 5010: Problem Set 3</title>
+<link type="text/css" rel="stylesheet" href="./CS 5010  Problem Set 3_files/course.css">
+<link type="text/css" rel="stylesheet" href="./CS 5010  Problem Set 3_files/problem-sets.css">
+</head>
+
+<body>
+<h1>CS 5010: Problem Set 3</h1>
+
+<p>
+<strong>Out:</strong> Monday, September 30, 2013
+</p>
+
+<p><strong>Due:</strong> Wednesday, October 9, 2013
+at 600pm local time
+</p>
+
+<p>
+The goal of this problem set is to help you design functions that deal
+with lists.
+
+</p>
+
+
+<p>Remember that you must follow the design recipe.  Your <a href="http://www.ccs.neu.edu/course/cs5010f13/deliverables.html">deliverables</a> include the data
+  analysis (including template), contract and purpose header,
+  examples, design strategy, code, and tests. You must also include
+  your laboratory notebook.</p>
+
+<p>As you did before, download a copy of <a href="http://www.ccs.neu.edu/course/cs5010f13/problem-sets/extras.rkt">extras.rkt</a> and put it in the folder with your solutions.
+Download any other files that are needed for each problem.  Put
+necessary <kbd>provide</kbd> and <kbd>require</kbd> directives at the top of your file, as
+you did before. </p>
+
+<hr>
+
+<h2>Required Exercises</h2>
+
+<p></p>
+
+<hr>
+
+<ol>
+
+  <li>Design a program called <kbd>inventory.rkt</kbd>, containing a set of
+    functions for manipulating the inventory of a bookstore,
+    represented as a list of books.  For each book, we must maintain
+    the following information:<p></p>
+
+  <ul>
+    <li> isbn, a number (the "international standard book number").
+    This serves as a unique identifier for this book.</li>
+    <li> title, a string</li>
+    <li> author, a string </li>
+    <li> publisher, a string</li>
+    <li> unit price: a number, the price at which we will sell the book</li>
+    <li> unit cost: a number, the cost of the book to the bookstore</li>
+    <li> number of copies on hand</li>
+    <li> re-order status.  Our bookstore periodically reorders books
+    from the publisher.  For each book, there is at most one
+    outstanding reorder.  If there is no reorder, the reorder
+    status must represent this information. If there is a reorder, the
+    re-order status 
+    contains the number of days until the the next shipment
+    of this book is expected to arrive, and the number of copies
+    expected to arrive at that time. Both of these
+    are positive integers.</li>
+    <li> cuft: the volume taken up by one unit of this item, in cubic
+    feet.</li> 
+  </ul>
+
+  <p>The inventory satisfies the invariant that there are no
+  duplicates:  any isbn appears at most once in the inventory.</p>
+
+  <p>You also need to deal with orders.  An order is a list of line
+  items.  A line item consists of a ISBN and the quantity ordered. Here
+  is an example of an order; each line of the table is a line item.
+  Here is an example of how an order might be displayed as a
+  table.</p>
+
+  <table>
+  <tbody><tr><th>ISBN</th><th align="right">Quantity</th></tr>
+  <tr>
+    <td>45861387</td>
+    <td align="right">3</td>
+  </tr>
+  <tr>
+    <td>19968208</td>
+    <td align="right">15</td>
+  </tr>
+  <tr>
+    <td>30581274</td>
+    <td align="right">10</td>
+  </tr>
+  </tbody></table>
+
+  <p>Like the inventory, an order will contain no duplicate line
+  items: any isbn will occur at most once in an order.</p>
+
+
+  <p>Also, for this problem, we introduce the Data Definition
+<kbd>MaybeNumber</kbd> :
+
+</p><pre>;; A MaybeNumber is one of:
+;; -- Number
+;; -- false
+</pre>
+<p></p>
+
+<p>Design the following functions.</p>
+
+  <p>All functions that return an inventory should return an inventory
+  with the books in the same order they were in the argument. </p>
+
+  <p>Your solution should provide the following functions:</p>
+
+<pre>inventory-potential-profit : Inventory -&gt;  Number
+GIVEN: an inventory
+RETURNS: the total profit for all the items in stock (i.e., how much
+the bookstore would profit if it sold every book in the inventory).
+
+inventory-total-volume : Inventory -&gt; Number
+RETURNS: the total volume needed to store all the books in stock.
+
+price-for-line-item : Inventory LineItem -&gt; MaybeNumber
+GIVEN: an inventory and a line item
+RETURNS: the price for that line item (the quantity times the unit
+price for that item).  Returns false if that isbn does not exist in
+the inventory. 
+
+fillable-now? : Order Inventory -&gt; Boolean.
+GIVEN: an order and an inventory
+RETURNS: true iff there are enough copies of each book on hand to fill
+the order.  If the order contains a book that is not in the inventory,
+then the order is not fillable.
+
+days-til-fillable : Order Inventory -&gt; MaybeNumber
+GIVEN: an order and an inventory
+RETURNS: the number of days until the order is fillable, assuming all
+the shipments come in on time.  Returns false if there won't be enough
+copies of some book, even after the next shipment of that book comes
+in.
+EXAMPLES: if the order contains one book that is out of stock, with a
+reorder status showing 2 days until delivery, then the order is
+refillable in 2 days.  If the order is for 10 copies of the book, and
+the next order consists of only 5 books, then should return false.
+
+price-for-order : Inventory Order -&gt; Number
+RETURNS: the total price for the given order.  The price does not
+depend on whether any particular line item is in stock.  Line items
+for an ISBN that is not in the inventory count as 0.
+
+inventory-after-order : Inventory Order -&gt; Inventory.
+GIVEN: an order
+WHERE: the order is fillable now
+RETURNS: the inventory after the order has been filled.
+
+increase-prices : Inventory String Number -&gt; Inventory
+GIVEN: an inventory, a publisher, and a percentage,
+RETURNS: an inventory like the original, except that all items by that
+publisher have their unit prices increased by the specified
+percentage.
+EXAMPLE: <kbd>(increase-prices inventory1 "MIT Press" 10)</kbd>
+returns an inventory like the original, except that all MIT Press
+books in the inventory have had their prices increased by 10%.
+
+Also provide the functions:
+
+make-book  (9 arguments)
+make-line-item (2 arguments)
+The arguments to these functions should appear in the same order as
+they do in the problem statement.
+
+reorder-present? : ReorderStatus -&gt; Boolean
+RETURNS: true iff the given ReorderStatus shows a pending re-order.
+
+make-empty-reorder : Any -&gt; ReorderStatus
+Ignores its argument
+RETURNS: a ReorderStatus showing no pending re-order. 
+
+make-reorder : PosInt PosInt -&gt; ReorderStatus
+GIVEN: a number of days and a number of copies
+RETURNS: a ReorderStatus with the given data.
+</pre>
+
+  <p>
+  Before you turn in your solution, make sure it passes the tests in
+  <a href="http://www.ccs.neu.edu/course/cs5010f13/problem-sets/ps03-inventory-qualification.rkt"><kbd>ps03-inventory-qualification.rkt</kbd></a>.  As before, download
+  this file, save it in your set03 directory, and run it to qualify
+  your program for grading.  Be sure to commit this file to repository
+  so we know that you've done this correctly. </p>
+
+
+
+</li>
+
+<li> (Balls in a Box).  Write a program called<kbd> balls-in-box.rkt</kbd> that
+meets the following requirements:<p></p>
+
+<ul>
+
+  <li>Your program should display some balls that you can drag on a
+  canvas.</li>
+  
+  <li>The program starts with a canvas 400 pixels wide and 300 pixels
+  high, with no balls.</li>
+  
+  <li>Hitting the "n" key should create a new ball in the center
+  of the canvas. </li>
+  
+  <li>You can select a ball by doing a button-down inside the ball.
+  When a ball is selected, you can drag it with the mouse.  It becomes
+  unselected when you do a mouse-up.  The ball should be smoothly
+  draggable, like the rectangle in problem set 2.</li>
+  
+  <li>The balls should be displayed as a circle with radius 20.  An
+  unselected ball should be displayed as an outline; a selected ball
+  should be displayed solid.  Unlike the draggable rectangle from last
+  week, you should NOT display the position of the mouse within the
+  ball.</li>
+
+  <li>In addition to the balls, you should display the number of balls
+  currently on the canvas.</li>
+
+  <!-- For next time: -->
+
+  <!-- Say something about what happens when the mouse leaves or enters -->
+  <!-- the canvas. -->
+
+</ul>
+
+<p>Your program should provide the following functions:</p>
+
+<pre>run : Any -&gt; World
+GIVEN: An argument, which is ignored.
+EFFECT: runs the world at tick rate of 0.25 secs/tick.
+RETURNS: the final state of the world.
+Note that the world does not respond to time passing, so the tick rate
+doesn't make a difference.
+
+initial-world : Any  -&gt; World
+GIVEN: An argument, which is ignored.
+RETURNS: a world with no balls.
+
+world-after-key-event : World KeyEvent -&gt; World
+RETURNS: the world that should follow the given world after the given
+key event.
+
+world-after-mouse-event : World Number Number MouseEvent -&gt; World
+RETURNS: the world that should follow the given world after the given
+mouse event.
+
+world-balls : World -&gt; ListOf&lt;Ball&gt;
+GIVEN: a world,
+RETURNS: the list of balls that are in the box.
+
+ball-x-pos : Ball -&gt; Number
+ball-y-pos : Ball -&gt; Number
+GIVEN: a ball
+RETURNS: the x or y position of its center
+
+ball-selected? : Ball -&gt; Boolean
+GIVEN: a ball
+RETURNS: true if and only if it is currently selected
+</pre>
+<p></p>
+
+<p>Note: if any of these functions are implemented as selectors on
+structs, then you don't need to provide the design recipe deliverables
+for them.</p>
+
+<p>If any function is just a renaming of an extractor, for example
+</p><pre>(define-struct ball (x y ...))
+...
+(define (ball-x-pos b)
+  (ball-x b))
+</pre>
+then you need to deliver a contract and purpose statement, but you
+don't need examples, strategy, or tests.
+<p></p>
+
+  <p>
+  Before you turn in your solution, make sure it passes the tests in
+  <a href="http://www.ccs.neu.edu/course/cs5010f13/problem-sets/ps03-balls-in-box-qualification.rkt"><kbd>ps03-balls-in-box-qualification.rkt</kbd></a>.  As before, download
+  this file, save it in your set03 directory, and run it to qualify
+  your program for grading.  Be sure to commit this file to repository
+  so we know that you've done this correctly.</p>
+
+<p>For what it's worth, my solution to this problem was 263 lines,
+exclusive of tests.  In Fall 2012, students solved a closely related
+problem of comparable difficulty in a median time of 8.8 hours.</p>
+
+</li>
+
+</ol>
+
+<hr>
+<address></address>
+<font size="-1">
+<p align="right">
+<!-- hhmts start -->
+Last modified: Thu Oct 10 11:07:05 -0400 2013 <!-- hhmts end -->
+ 
+</p></font></body></html>
