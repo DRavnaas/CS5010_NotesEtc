@@ -1,0 +1,26 @@
+ball
+
+- decided mouse for world, center for rectangle
+
+assume the mouse must be 
+
+button down - select any ball 
+drag
+button up
+
+eq? = same object?
+
+equal? 
+
+eqv?
+
+The number and character datatypes are the only ones for which eqv? differs from eq?.
+
+Two values are equal? if and only if they are eqv?, unless otherwise specified for a particular datatype.
+Datatypes with further specification of equal? include strings, byte strings, pairs, mutable pairs, vectors, boxes, hash tables, and inspectable structures. In the last six cases, equality is recursively defined; if both v1 and v2 contain reference cycles, they are equal when the infinite unfoldings of the values would be equal. 
+
+A fixnum is an exact integer whose two’s complement representation fit into 31 bits on a 32-bit platform or 63 bits on a 64-bit platform; furthermore, no allocation is required when computing with fixnums. See also the racket/fixnum module, below.
+
+Two fixnums that are = are also the same according to eq?. Otherwise, the result of eq? applied to two numbers is undefined, except that numbers produced by the default reader in read-syntax mode are interned and therefore eq? when they are eqv?.
+
+Two numbers are eqv? when they are both inexact with the same precision or both exact, and when they are = (except for +nan.0, +nan.f, 0.0, 0.0f0, -0.0, and -0.0f0, as noted above). Two numbers are equal? when they are eqv?.
