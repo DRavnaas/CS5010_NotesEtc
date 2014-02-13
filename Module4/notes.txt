@@ -24,3 +24,23 @@ A fixnum is an exact integer whose two’s complement representation fit into 31 b
 Two fixnums that are = are also the same according to eq?. Otherwise, the result of eq? applied to two numbers is undefined, except that numbers produced by the default reader in read-syntax mode are interned and therefore eq? when they are eqv?.
 
 Two numbers are eqv? when they are both inexact with the same precision or both exact, and when they are = (except for +nan.0, +nan.f, 0.0, 0.0f0, -0.0, and -0.0f0, as noted above). Two numbers are equal? when they are eqv?.
+
+
+state for balls:
+
+start - unselected
+
+if mouse down in ball - selected (only balls with mouse change)
+specifically - ball selected changes, but nothing else
+otherwise, balls do not change
+world changes (since tracking mouse)
+
+if drag - only selected balls change by delta (center)
+current mouse (world) - previous mouse (so mouse to bottom right is +)
+Then use delta to move ball
+ball 
+other balls do not change
+
+if button up - if selected ball, just changes selected state
+other balls do not change
+
