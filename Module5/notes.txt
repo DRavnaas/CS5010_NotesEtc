@@ -1,0 +1,95 @@
+
+Module 5 - lambda, local, higher order functions, standard functions
+
+(define (add1 x) (+ x 1))
+(define  add1 (lambda (x) (+ x 1)))
+
+These are the same
+
+Define and local are very similar
+local is used in functions, define is used outside
+But it's a matter of style
+
+Need contract and purpose for both
+don't need examples, or tests (or strategy because should be very simple)
+
+Note that lambda can't call itself easily (it has no name)
+
+"Structure and Interpretation of Computer Programs"
+(look up y operator)
+available online for free
+
+"The little schemer"
+fun and easy
+
+"y" operator
+
+higher order function
+(define (something x)
+ (lambda(y) (+ y x)))
+
+(define add3 (something 3))
+=> body -> (lambda(y) (+ y 3))
+=> ie: ((lambda(y) (+ y 3)) 10) ; ie: y=10
+
+so add3 adds something to 3
+something take an input and adds it to 3
+the lambda adds something to 3
+
+
+((lambda(x y) (+ y x) 
+
+(define other (lambda (x) (lambda(y) (+ x y))))
+
+->  ((other 5) 2)
+(other 5) => function that adds something to 5
+
+ie: functions are first class objects
+- give them names
+- pass them
+- return them
+- assign their value to variables (do operations on them?)
+- put them inside data structures (make a list, etc)
+
+
+Calculus
+
+df/dx = limit as deltaX goes to zero of (f(x + deltaX) - f(x))/deltaX
+
+in scheme
+(define derivative(f)
+ (lambda(w)
+   (/ (- (f (+ w deltaX) (f w)) deltaX)))
+
+(simplify the limit by saying deltaX is really small (define deltaX as e to the -10th)
+
+
+(define delta-x 0.00000001)
+(define (derivative f)
+(lambda (w)
+ (/ (- (f (+ w delta-x)) (f w)) (delta-x)))
+
+((derivative (lambda (x) (* x x x))) 4)
+= 48
+
+(((lambda(x)  
+    lambda(y) (+ y x) 3) 5)
+
+first step - get rid of first lambda by substituting in the expression and replacing all x's with 3's
+
+-> ((lambda (y) (+ 3 y)) 5)
+
+
+"check syntax" -> show stepp
+shows the result of one step
+
+next step - take expression and replace all y's with 5's
+
+(+ 3 5)
+
+stepper - left to right, inside out
+this guarantees no infinite loop (?) lambda calculus
+
+(don't use foldr when another standard function is available)
+
+
