@@ -124,4 +124,7 @@ foldr
 ; for the given list:
 ; if the list is empty, perform the operation with the given operand (eg: + 1 in the given example)
 ; if the list is not empty, take the first item and perform the operation against that item and the rest of the list
+; note that the "item" from the list is the first argument for the foldr "per item operation" function 
+; (ie: foldr on ListOf<X> assumes a binary operator that takes X as it's first parameter and 
+; Y (= the value type foldr is collapsing into) as the second.
 
