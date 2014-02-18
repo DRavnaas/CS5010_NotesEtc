@@ -1,0 +1,49 @@
+problem set #5:
+=================
+
+(from fall)
+
+world
+
+tree
+
+key events
+
+mouse events
+
+? can root be dragged off screen ? 
+?why selected node red?
+
+node size is change-able by single line of code
+
+select a node - only selects node, not sons
+
+dragging node drags "tree" made up nodes and sons
+
+more than one root allowed in world
+
+t = new node
+n = new son to selected node 
+(x = node x of leftmost son + 2 * node width)
+(y = node y of leftmost son + 3 * node length)
+if a son wouldn't fit, turn selected node red
+
+d deletes a node
+
+key event: partition
+"t"
+"d:
+"n"
+everything else
+
+mouse event: partition
+"button down"
+"drag"
+"button up"
+
+everything else
+
+
+
+
+if no room for son, 
