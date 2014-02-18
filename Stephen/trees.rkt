@@ -39,6 +39,20 @@
 
 ;;; DATA DEFINITIONS
 
+(define-struct world (mouse-x mouse-y roots))
+;; A World is a (make-world Number Number ListOf<Node>)
+;; Interpretation: 
+;; mouse-x and mouse-y give the last known "selection" position of the mouse
+;; in the world.  Both values are zero if nothing is selected in the world.
+;; Roots is a list of trees in the world - it is empty if there are no trees.
+
+;; template:
+;; world-fn : World -> ??
+;(define (world-fn w)
+;  (... (world-mouse-x w)
+;       (world-mouse-y w)
+;       (world-roots w)
+
 ;; A MyMouseEvent is a partition of MouseEvent into the
 ;; following categories:
 ;; -- "button-down"   (interp: maybe select something)
