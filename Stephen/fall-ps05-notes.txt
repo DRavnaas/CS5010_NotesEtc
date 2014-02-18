@@ -32,7 +32,7 @@ d deletes a node
 
 key event: partition
 "t"
-"d:
+"d"
 "n"
 everything else
 
@@ -44,6 +44,17 @@ mouse event: partition
 everything else
 
 
+world: 
+- likely knows mouse x,y and list of nodes
 
 
-if no room for son, 
+node - selected (& subtree) x,y of center
+
+for "leftmost" son - node calls sons to figure out leftmost node
+(every son returns center, then node get max of leftmost to see if next son would fit)
+
+
+use scene+line
+
+
+8:50 -> 10:20
