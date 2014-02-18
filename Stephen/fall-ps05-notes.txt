@@ -64,4 +64,4 @@ for "leftmost" son - node calls sons to figure out leftmost node
 use scene+line
 
 
-8:50 -> 10:
+8:50 -> 10:45
