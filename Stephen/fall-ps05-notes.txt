@@ -11,8 +11,10 @@ key events
 
 mouse events
 
-? can root be dragged off screen ? 
-?why selected node red?
+? can selected node be dragged off screen ? 
+? can you move son "above" root?
+
+canvas = 400x400
 
 node size is change-able by single line of code
 
@@ -24,6 +26,7 @@ more than one root allowed in world
 
 t = new node
 n = new son to selected node 
+u = deletes all nodes in upper half of canvas
 (x = node x of leftmost son + 2 * node width)
 (y = node y of leftmost son + 3 * node length)
 if a son wouldn't fit, turn selected node red
@@ -34,21 +37,25 @@ key event: partition
 "t"
 "d"
 "n"
+"u"
 everything else
 
 mouse event: partition
 "button down"
 "drag"
 "button up"
-
 everything else
 
 
 world: 
 - likely knows mouse x,y and list of nodes
+roots = list of nodes, 
 
 
-node - selected (& subtree) x,y of center
+node - selected (& subtree) x,y of center & bool for "no room for child" flag
+hints from required provided functions:
+ center = x, y, sons = list of nodes, selected  (and our "room for child" flag)
+
 
 for "leftmost" son - node calls sons to figure out leftmost node
 (every son returns center, then node get max of leftmost to see if next son would fit)
@@ -57,4 +64,4 @@ for "leftmost" son - node calls sons to figure out leftmost node
 use scene+line
 
 
-8:50 -> 10:20
+8:50 -> 10:
