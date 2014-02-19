@@ -1,11 +1,7 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-beginner-reader.ss" "lang")((modname trees) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ())))
-<<<<<<< HEAD
-;; STEVE UPDATE 2
-=======
 ;; STEVE UPDATE  - dcr
->>>>>>> 22baf33c2968e604db0a3f0db12b90473124f160
 
 ;; trees.rkt
 
