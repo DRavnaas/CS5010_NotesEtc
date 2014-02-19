@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname trees) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ())))
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname trees) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ())))
 ;; CS5010
 ;; Problem Set 5
 ;; Exercise 1 (Trees)
@@ -45,16 +45,51 @@
 (define CANVAS-CENTER-X (/ CANVAS-WIDTH 2))
 (define CANVAS-CENTER-Y (/ CANVAS-HEIGHT 2))
 
+;; node locations
+(define NEW-NODE-Y (/ SQUARE-SIDE 2))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; DATA DEFINITIONS
 
+(define-struct node (x-pos y-pos selected? child-fit? branch))
+;; A Node is a (make-node Integer Integer Boolean Boolean Branch)
+;; Interpretation:
+;; x-pos and y-pos represent the center of the node
+;; selected? is true if the node is selected, false otherwise
+;; child-fit? is true if the next new child node could fit on the canvas
+;; when the parent node is selected, false otherwise.
+;; branch represents sub-tree of the node.
+
+;; template:
+;; node-fn : Node -> ??
+(define (node-fn a-node)
+  (... (node-x-pos a-node)
+       (node-y-pos a-node)
+       (node-selected? a-node)
+       (node-child-fit? a-node)
+       (branch-fn (node-branch a-node))))
+
+
+;; An Branch is a ListOf<Node>
+;; Interp: the list of nodes in a sub-tree of a node.
+
+;; template
+;; branch-fn : Branch -> ??
+(define (branch-fn a-branch)
+  (cond
+    [(empty? a-branch) ...]
+    [else (... (node-fn (first a-branch))
+               (branch-fn (rest a-branch)))]))
+
+;; NODES FOR TESTING
+(define NEW-ROOT (make-node CANVAS-CENTER-X NEW-NODE-Y false true empty))
 
 
 (define-struct world (mouse-x mouse-y roots))
-;; A World is a (make-world Number Number ListOf<Node>)
+;; A World is a (make-world Integer Integer ListOf<Node>)
 ;; Interpretation: 
 ;; mouse-x and mouse-y give the last known "selection" position of the mouse
 ;; in the world.  Both values are zero if nothing is selected in the world.
@@ -62,14 +97,14 @@
 
 ;; template:
 ;; world-fn : World -> ??
-;(define (world-fn w)
-;  (... (world-mouse-x w)
-;       (world-mouse-y w)
-;       (world-roots w)
-(define EMPTY-WORLD (make-world 0 0 empty))
+;(define (world-fn a-world)
+;  (... (world-mouse-x a-world)
+;       (world-mouse-y a-world)
+;       (world-roots a-world)
 
-;(define WORLD-WITH-ONE-UNSELECTED-NODE 
-;  (make-world 0 0 (list (make-node ?????)))
+;; WORLDS FOR TESTING
+(define EMPTY-WORLD (make-world 0 0 empty))
+(define WORLD-WITH-NEW-NODE (make-world 0 0 NEW-ROOT))
 
 
 ;; A NodeMouseEvent is a partition of MouseEvent into the
@@ -118,7 +153,54 @@
 
 ;; FUNCTIONS
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; RUN FUNCTION
+
+;; run :  Any -> World
+;; GIVEN: any value
+;; EFFECT: runs a copy of an initial world
+;; RETURNS: the final state of the world.  The given value is ignored.
+
+;; STRATEGY: Functional Composition
+
+(define (run value)
+  (big-bang (initial-world value)
+            (on-draw world->scene)
+            (on-key world-after-key-event)
+            (on-mouse world-after-mouse-event)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; INITIAL WORLD
+
+;; initial-world : Any -> World
+;; GIVEN: any value
+;; RETURNS: an initial world.  The given value is ignored.
+
+;; EXAMPLES:
+;; Four different types of values should produce the same initial world
+;; (initial-world 0) = EMPTY-WORLD
+;; (initial-world true) = EMPTY-WORLD
+;; (initial-world "value") = EMPTY-WORLD
+;; (initial-world 'value) = EMPTY-WORLD
+
+;; STRATEGY: Functional Composition
+
+(define (initial-world value)
+  EMPTY-WORLD)
+
+;; TESTS: to verify that the same pre-defined initial world is returned
+(define-test-suite initial-world-tests
+  (check-equal? (initial-world 0) EMPTY-WORLD)
+  (check-equal? (initial-world true) EMPTY-WORLD)
+  (check-equal? (initial-world "value") EMPTY-WORLD)
+  (check-equal? (initial-world 'value) EMPTY-WORLD)
+  "Given any value, the same pre-defined initial world should be returned.")
+
+"initial-world-tests"
+(run-tests initial-world-tests)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Scene and image handling - functions that display the world and its elements
 
@@ -165,11 +247,11 @@
 ;;
 ;; STRATEGY: structural decomposition on world
 (define (world-after-button-down w mx my)
-;  (if (in-any-node? mx my (world-roots w))
+  ;  (if (in-any-node? mx my (world-roots w))
   (build-world-with-selected-subtree
-    (world-mouse-x w)
-    (world-mouse-y w)
-    (world-roots w)))
+   (world-mouse-x w)
+   (world-mouse-y w)
+   (world-roots w)))
 ;   w))
 
 
@@ -201,7 +283,7 @@
 ;;
 ;; STRATEGY: structural decomposition on World
 (define (world-after-drag w mx my)
- (build-world-with-moved-selected-subtree
+  (build-world-with-moved-selected-subtree
    mx
    my
    (world-mouse-x w)
