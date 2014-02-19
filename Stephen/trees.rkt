@@ -1,9 +1,18 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-beginner-reader.ss" "lang")((modname trees) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ())))
-;; STEVE UPDATE  - dcr
+;; CS5010
+;; Problem Set 5
+;; Exercise 1 (Trees)
+;; Doyle Ravnaas (ravnaas.d@husky.neu.edu)
+;; Stephen Court (court.s@husky.neu.edu)
 
-;; trees.rkt
+;; PURPOSE:
+;; The system allows the creation and manipulation of trees on a canvas.
+
+;; HOW TO RUN?:
+;; Run with (run 0)
+
 
 (require 2htdp/universe)
 (require 2htdp/image)
@@ -11,7 +20,6 @@
 (require rackunit/text-ui)
 ;(require "extras.rkt")
 
-;; run with (run 0)
 
 ;(provide run)
 ;(provide initial-world)
@@ -23,7 +31,8 @@
 ;(provide node-to-selected?)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; CONSTANTS
 (define SQUARE-SIDE 20)
@@ -37,9 +46,12 @@
 (define CANVAS-CENTER-Y (/ CANVAS-HEIGHT 2))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; DATA DEFINITIONS
+;; DATA DEFINITIONS
+
+
 
 (define-struct world (mouse-x mouse-y roots))
 ;; A World is a (make-world Number Number ListOf<Node>)
@@ -55,7 +67,8 @@
 ;       (world-mouse-y w)
 ;       (world-roots w)
 
-;; A MyMouseEvent is a partition of MouseEvent into the
+
+;; A NodeMouseEvent is a partition of MouseEvent into the
 ;; following categories:
 ;; -- "button-down"   (interp: maybe select something)
 ;; -- "drag"          (interp: maybe drag something)
@@ -69,17 +82,25 @@
 ;    [(mouse=? mev "button-up") ...]
 ;    [else ...]))
 
-;; A MyKeyEvent is a partition of KeyEvent, which is one of
-;; -- "t"  (interp: "tree" - add a tree to the world)
+
+;; A NodeKeyEvent is a partition of KeyEvent, which is one of
+;; -- "t"  (interp: "tree" - add a new root node to the world)
 ;; -- "n"  (interp: "node" - add a son for selected node)
 ;; -- "d"  (interp: "delete" - delete selected node and its subtree)
 ;; -- "u"  (interp: "upper" - delete all nodes and their subtree in upper half
 ;;                  of canvas)
 ;; -- any other KeyEvent (interp: ignore)
 
+;; examples for testing
+(define NEW-ROOT-NODE-EVENT "t")
+(define NEW-CHILD-EVENT "n")
+(define DELETE-SELECTED-NODE-EVENT "d")
+(define DELETE-UPPER-NODES-KEY-EVENT "u")
+(define UNWANTED-KEY-EVENT "q")
+
 ;; template:
-;; my-kev-fn : MyKeyEvent -> ??
-;(define (my-kev-fn kev)
+;; node-kev-fn : NodeKeyEvent -> ??
+;(define (node-kev-fn kev)
 ;  (cond 
 ;    [(key=? kev "t") ...]
 ;    [(key=? kev "n") ...]
@@ -88,8 +109,12 @@
 ;    [else ...]))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; mouse event handling - helpers and main functions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; FUNCTIONS
+
+;; mouse event handling - helpers and main functions
 
 ;; world-after-mouse-event : World Number Number MouseEvent -> World
 ;; GIVEN: A world, the current mouse coordinates and a mouse event
@@ -108,7 +133,7 @@
     [(mouse=? mev "button-up")(world-after-button-up w mx my)]
     [else w]))
 
-; helpers for mouse event handling
+;; helpers for mouse event handling
 
 ;; world-after-button-down : World Number Number -> World
 ;; GIVEN: A world and the current mouse coordinates
@@ -227,6 +252,8 @@
    (build-list-with-unselected-nodes roots)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; key event handling - helpers and main functions
 
 ;; world-after-key-event : World MyKeyEvent -> World
 ;; GIVEN: a world w
