@@ -66,6 +66,10 @@
 ;  (... (world-mouse-x w)
 ;       (world-mouse-y w)
 ;       (world-roots w)
+(define EMPTY-WORLD (make-world 0 0 empty))
+
+;(define WORLD-WITH-ONE-UNSELECTED-NODE 
+;  (make-world 0 0 (list (make-node ?????)))
 
 
 ;; A NodeMouseEvent is a partition of MouseEvent into the
@@ -95,7 +99,7 @@
 (define NEW-ROOT-NODE-EVENT "t")
 (define NEW-CHILD-EVENT "n")
 (define DELETE-SELECTED-NODE-EVENT "d")
-(define DELETE-UPPER-NODES-KEY-EVENT "u")
+(define DELETE-UPPER-NODES-EVENT "u")
 (define UNWANTED-KEY-EVENT "q")
 
 ;; template:
@@ -114,6 +118,21 @@
 
 ;; FUNCTIONS
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Scene and image handling - functions that display the world and its elements
+
+;; world-to-scene : World -> Scene
+;; GIVEN: a world
+;; RETURNS: a Scene that portrays the given world.
+;; EXAMPLE: 
+;;  (world-to-scene EMPTY-WORLD)
+;;   = EMPTY-CANVAS
+;; STRATEGY: structural decomposition on World
+(define (world-to-scene w)
+  (roots-to-image (world-roots w)))  
+
+
 ;; mouse event handling - helpers and main functions
 
 ;; world-after-mouse-event : World Number Number MouseEvent -> World
@@ -125,7 +144,7 @@
 ;;
 ;; EXAMPLES: See tests
 ;;
-;; STRATEGY:  structural decomposition on MyMouseEvent
+;; STRATEGY:  structural decomposition on NodeMouseEvent
 (define (world-after-mouse-event w mx my mev)
   (cond    
     [(mouse=? mev "button-down") (world-after-button-down w mx my)]
@@ -255,20 +274,20 @@
 
 ;; key event handling - helpers and main functions
 
-;; world-after-key-event : World MyKeyEvent -> World
+;; world-after-key-event : World NodeKeyEvent -> World
 ;; GIVEN: a world w
 ;; RETURNS: the world that should follow the given world
 ;; after the given key event.  
 ;; 
 ;; EXAMPLES: see tests below
 ;;
-;; STRATEGY: structural decomposition on kev : MyKeyEvent
+;; STRATEGY: structural decomposition on kev : NodeKeyEvent
 (define (world-after-key-event w kev)
   (cond
-    [(key=? kev "t") (world-after-tree-key w)]
-    [(key=? kev "n") (world-after-node-key w)]
-    [(key=? kev "d") (world-after-delete-key w)]
-    [(key=? kev "u") (world-after-upper-key w)]
+    [(key=? kev NEW-ROOT-NODE-EVENT) (world-after-tree-key w)]
+    [(key=? kev NEW-CHILD-EVENT) (world-after-node-key w)]
+    [(key=? kev DELETE-SELECTED-NODE-EVENT) (world-after-delete-key w)]
+    [(key=? kev DELETE-UPPER-NODES-EVENT) (world-after-upper-key w)]
     [else w]))
 
 ;; world-after-tree-key : World -> World
