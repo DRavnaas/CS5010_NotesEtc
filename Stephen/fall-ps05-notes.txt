@@ -15,8 +15,11 @@ mouse events
 ? can you move son "above" root?
 ? any tips for pair programming - code reviews, etc?
 ? What about the notebook?
+? For tree template - can each node be a struct and then list of subnodes?
+(example in slides, what if slides were person (name age gender)
 
 canvas = 400x400
+
 
 node size is change-able by single line of code
 
@@ -67,3 +70,68 @@ use scene+line
 
 
 8:50 -> 10:45
+
+8:30 -> 9:00
+
+2/18 10:15 -> 11:51
+
+
+Scene plus line 
+http://docs.racket-lang.org/teachpack/2htdpimage.html?q=scene+line&q=scene+line#%28def._%28%28lib._2htdp%2Fimage..rkt%29._scene%2Bline%29%29 
+
+example:
+(scene+line (rectangle 20 20 "solid" "gray") 
+              -10 50 50 -10 "maroon") 
+
+
+
+(place-image image x y scene) ? image?
+ 
+  image : image? 
+  x : real? 
+  y : real? 
+  scene : image? 
+
+
+
+(require 2htdp/universe)
+(require 2htdp/image)
+(require rackunit)
+(require rackunit/text-ui)
+
+(define EMPTY-CANVAS (empty-scene 400 400))
+
+; one rectangle on a canvas
+(define scene-with-one-rectangle
+  (place-image (rectangle 20 20 "outline" "green")
+               100 100 
+               EMPTY-CANVAS))
+
+; two rectangles on a canvas
+(define scene-with-two-rectangles
+  (place-image (rectangle 20 20 "outline" "green")
+  50 50 
+  scene-with-one-rectangle))
+
+; two rectangles with a line
+(scene+line scene-with-two-rectangles
+            50 50
+            100 100
+            "blue") 
+
+
+;or we could use place-images for all the rectangles?
+
+iteration could be (this is rough)
+
+build scene with rectangle and draw line to parent
+
+X-to-image (pass in empty canvas
+use foldr to fold list into image and nodes into image
+roots-to-image - higher level list of roots from world to image
+nodes-to-image - helper to make a tree of nodes turn into an image
+node-to-image - (maybe two variants?)
+if passed parent center, - places rectangle and then draws line
+if not - places rectangle only
+
+
