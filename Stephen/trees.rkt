@@ -129,8 +129,7 @@
 
 ;; build-world-with-selected-subtree 
 ;;   Number Number ListOf<Node> Boolean PosInt -> World
-;; GIVEN: The current mouse coordinates, a list of nodes, a paused state,
-;; and a tick speed for the world
+;; GIVEN: The current mouse coordinates, and a list of root nodes
 ;; RETURNS: a world with any node containing the coordinates now marked
 ;; as selected; other attributes of the world are set to the given values.
 ;; 
@@ -143,15 +142,14 @@
    my
    (build-list-with-selected-nodes-at-position mx my roots)))
 
-
 ;; world-after-drag : World Number Number -> World
 ;; GIVEN: A world and the current mouse coordinates
 ;; RETURNS: the world following a drag at the given location.
-;; if no nodes in the world are selected, then return a world with the selection
-;; mouse coordinates changed, but otherwise unchanged (nodes, paused/unpaused,
-;; and speed same as given world).  If any node is selected, then return a world
-;; with the new mouse selection position, and any selected nodes moved by the
-;; same delta as the mouse.
+;; If no nodes in the world are selected, then return a world with the selection
+;; mouse coordinates changed, but otherwise unchanged.  If any node is selected, 
+;; then return a world with the new mouse selection position, and any selected 
+;; nodes moved by the same delta as the mouse (as determined by the previous
+;; mouse coordinates stored in the world state).
 ;;
 ;; EXAMPLES: See tests
 ;;
@@ -168,10 +166,10 @@
 ;;     Number Number Number Number ListOf<Node> -> World
 ;; GIVEN: x,y current mouse selection coordinates, previous x,y mouse 
 ;;  coordinates, and a list of nodes
-;; RETURNS:  A world with the given mouse selection coordinates, a list 
-;; of nodes, a paused state and the given tick speed.  The returned world's list
-;; of nodes is the same as the given one, except any selected nodes are moved by
-;; the same delta as the mouse (ie: delta of current to previous coordinates).
+;; RETURNS:  A world with the given mouse selection coordinates, and a list 
+;; of root nodes.  The returned world's list of nodes is the same as the given 
+;; one, except any selected nodes are moved by the same delta as the mouse 
+;; (ie: delta of current to previous coordinates).
 ;;   
 ;; EXAMPLE:
 ;;  (build-world-with-moved-selected-subtree
@@ -194,9 +192,8 @@
 ;; RETURNS: the world following a mouse button up at the given location.
 ;; If no nodes in the world are selected, then return a world just like the 
 ;; given one, other than the selected mouse coordinates are zero. If any node
-;; is selected, then return a world where those nodes are unselected and the 
-;; selection coordinates are zero.  The paused/unpaused state and tick speed
-;; of the world is unchanged for button-up.
+;; is selected, then return a world where the selected nodes are unselected and
+;; the selection coordinates are zero.  
 ;;
 ;; EXAMPLES: See tests
 ;;
@@ -211,19 +208,21 @@
 ;;   Number Number ListOf<Node> -> World
 ;; GIVEN: The current mouse coordinates, a list of nodes, a paused state, and
 ;; a world tick speed
-;; RETURNS: A world with the given mouse coordinates, a list of nodes, the
-;; given paused state, and the given tick speed.  The world's list of nodes
-;; is the same as the given one, except any selected nodes now unselected.
+;; RETURNS: A world with the given mouse coordinates, and a list of root nodes.
+;; The world's list of nodes is the same as the given one, except any selected 
+;; nodes now unselected.
 ;;
 ;; EXAMPLE:
 ;;  (build-world-with-unselected-nodes 
+;;     100 100 two-roots-with-no-sons)
+;;   = > A world with mouse coordinates set to 100 100, and no selected nodes
 ;; 
 ;; STRATEGY: functional composition
-(define (build-world-with-unselected-nodes mx my lst)
+(define (build-world-with-unselected-nodes mx my roots)
   (make-world
    mx
    my
-   (build-list-with-unselected-node lst)))
+   (build-list-with-unselected-nodes roots)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
