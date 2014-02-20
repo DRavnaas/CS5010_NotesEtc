@@ -4,8 +4,8 @@
 ;; CS5010
 ;; Problem Set 5
 ;; Exercise 1 (Trees)
-;; Doyle Ravnaas (ravnaas.d@husky.neu.edu)
 ;; Stephen Court (court.s@husky.neu.edu)
+;; Doyle Ravnaas (ravnaas.d@husky.neu.edu)
 
 ;; PURPOSE:
 ;; The system allows the creation and manipulation of trees on a canvas.
@@ -18,7 +18,7 @@
 (require 2htdp/image)
 (require rackunit)
 (require rackunit/text-ui)
-;(require "extras.rkt")
+(require "extras.rkt")
 
 
 ;(provide run)
