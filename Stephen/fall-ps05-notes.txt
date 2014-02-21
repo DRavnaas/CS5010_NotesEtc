@@ -1,7 +1,11 @@
+
+Lecture notes:
+===============
+
+
 problem set #5:
 =================
 
-(from fall)
 
 world
 
@@ -11,7 +15,7 @@ key events
 
 mouse events
 
-? can selected node be dragged off screen ? 
+? can selected node be dragged off screen ? - allow selected node to be cropped
 ? can you move son "above" root?
 ? any tips for pair programming - code reviews, etc?
 ? What about the notebook?
@@ -19,7 +23,6 @@ mouse events
 (example in slides, what if slides were person (name age gender)
 
 canvas = 400x400
-
 
 node size is change-able by single line of code
 
@@ -135,3 +138,43 @@ if passed parent center, - places rectangle and then draws line
 if not - places rectangle only
 
 
+Try not to write the same code twice (a guideline now, but will be a requirement later)
+
+Structural decomposition on X and Y ok
+
+ToDo:
+Scene 
+- merge into trees, see if function can be merged
+- selected?
+- room for child?
+- tests
+- comments
+
+Key events:
+t
+n
+
+d
+u
+
+for t:
+new root, center of canvas
+
+for "n"
+1st son is directly below selected node
+2nd - n, if "can fit flag"
+ 2 square lengths from center of left most son
+ 3 square heights from center of selected node
+
+Mouse events:
+button down (select)
+drag (move node and subtree, handle "no room" problem)
+button up (deselect)
+
+drag (and turning red)
+seems like a foldr min 0 for "lowest x position" and then comparing to 0+square width
+marks "can fit son" flag
+
+
+
+button up
