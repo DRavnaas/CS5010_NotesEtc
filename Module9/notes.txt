@@ -1,0 +1,141 @@
+Lecture for module 8
+
+Need to be able to calculate max number for halting measure (is it finite)
+
+
+
+Halting measure = 
+pos integer
+decreases
+is finite
+
+graph walk - just calculate the successors
+
+Halting measure = computation of some kind (an alternate "quick" route to proving termination)
+it can be n (where n is decrementing by 1 and a pos int)
+it can be max - num, where num is increasing by 1 and starts out under max and both are ints
+
+Termination argument = full mathematical proof that it will halt
+
+Invariant = if you prove this is true, then you can prove that the program is true 
+(ie: a corellary - if you prove this is true, then you can prove the program works)
+
+See slide 19 in queens slide deck for an invariant and halting measure
+
+empty? newest false = you needed to be able to get to 
+
+any-complete? checks if the newest things are what we want
+and if so - place one in newest node
+
+proof form was start with empty (show that it holds for empty) - then show it holds from the next state
+
+(ie: invariant says 
+
+you start with a complete placement of queens
+- you keep going as long as there is another newest where you can extend the placement of queens
+
+(and it's an invariant since you aren't allowed to "sneak" a queen on the board - that would mess 
+
+show an invariant is true by showing it's true when you start
+- then show it stays true when you call recursively - is it still true for all recursive calls?
+"it starts true and then it stays true"
+
+Now - given the invariant is true - can you see that the program is "correct"
+(ie: empty and any-complete - that's where the work is done - so that's what you have to prove)
+
+
+So for factorial:
+
+(define (fact n)
+ (if (= n 0)
+	1
+	(* n (fact (- n 1))))
+
+
+; Need a contract to show it will work
+; n is an integer
+; and n >= 0 (and finite)
+
+; n is your halting measure
+
+can prove factorial is correct by mathmatical induction
+(show it's true for n=0
+then show it's true for n and n+1 where n > 0
+
+
+Written the other way - iterative
+
+(define (fact n)
+ (local (define (loop so-far left)
+  (if (= left 0)
+	so-far
+	(loop (* left so-far)
+ 	(- left 1))))
+ (loop 1 n))
+
+halting measurement for local loop is left
+(fact halting measurement is n since that's passed as left)
+
+possible invariant:  n! = so-far * left!
+is it true when you start?
+is it true at each iteration?
+is it true at the end?
+(then it's an invariant)
+
+true with 1 n (at start)
+
+n! = sofar * left
+
+(if you prove it's true, then you can assume it thereafter)
+
+in middle
+
+
+at end - left is 0, so left! = 1, which means sofar is n! (we can use what we already proved)
+
+
+Steps:
+- find the invariant (hardest part) - fit the three criteria (positive integer decreasing and finite)
+- Show that whole program stops
+	- identify halting measure 
+	- invariant is true (n! = sofar * left!)
+		- true at start, true at n and n+ 1, then true at end
+
+invariants generally 
+arguments relate to the end value (ie: n! = so-far * left!)
+my arguments and my return value are a function of their last iteration 
+
+SO - might not be a where clause thing - can break it out to an invariant statement separately
+
+expect to be asked why the invariant is true
+
+general recursion - needs an invariant and halting measure
+
+don't typically put down for HOFC or structural decomposition on lists
+
+better idea to wrap the function and not expose to the public if you have this invariant 
+(ie: keep it under control so you can guarantee the invariant)
+
+- that's why Jim prefers keeping invariants in local define functions - not available elsewhere
+
+
+- then 
+
+true at middle 
+
+
+problem set
+- note that a block inside a set is adjacent to the set (by definition) 
+- and a block is adjacent to itself
+
+
+Please use ListOf<x> (feel free to include template, but just stuff in a "list of " section he doesn't have to review
+
+- don't use names of variables as data types - tell him what it is, what does it represent
+
+Robot can't start on block? (assume it's ok)
+
+A path that makes you go back where you started doesn't make a lot of sense
+
+
+
