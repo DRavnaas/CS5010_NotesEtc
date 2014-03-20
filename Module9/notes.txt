@@ -133,7 +133,7 @@ Please use ListOf<x> (feel free to include template, but just stuff in a "list o
 
 - don't use names of variables as data types - tell him what it is, what does it represent
 
-Robot can't start on block? (assume it's ok)
+Robot can't start on block? (Jim says he'll remember that he said we can choose false or robot stops at next block) 
 
 A path that makes you go back where you started doesn't make a lot of sense
 
